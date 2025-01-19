@@ -1,0 +1,35 @@
+const express = require('express');
+const router = express.Router();
+const Content = require('../models/HomeContent');
+
+// GET: Fetch content
+router.get('/', async (req, res) => {
+  try {
+    const content = await Content.findOne();
+    res.json(content || {});
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch content' });
+  }
+});
+
+// POST: Add or update content
+router.post('/', async (req, res) => {
+  try {
+    const existingContent = await Content.findOne();
+    if (existingContent) {
+      // Update existing content
+      Object.assign(existingContent, req.body);
+      await existingContent.save();
+      res.status(200).json({ message: 'Content updated successfully' });
+    } else {
+      // Create new content
+      const newContent = new Content(req.body);
+      await newContent.save();
+      res.status(201).json({ message: 'Content created successfully' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to save content' });
+  }
+});
+
+module.exports = router;
