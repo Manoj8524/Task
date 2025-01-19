@@ -30,7 +30,11 @@ app.use('/api', footerRoutes);
 app.use('/api/content', contentRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
-app.use('/uploads', express.static('uploads')); 
+
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
