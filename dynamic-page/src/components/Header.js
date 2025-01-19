@@ -8,8 +8,8 @@ const Header = () => {
   useEffect(() => {
     const fetchHeaderData = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/header`; // Use environment variable
-        const response = await axios.get(apiUrl);
+        console.log('API Base URL:', process.env.REACT_APP_API_BASE_URL); // Check the value
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/header`);
         setHeaderData(response.data);
       } catch (error) {
         console.error("Error fetching header data:", error);
