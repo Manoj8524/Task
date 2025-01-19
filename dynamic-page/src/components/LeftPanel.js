@@ -9,7 +9,8 @@ const LeftPanel = () => {
   // Fetch links from API
   const fetchLinks = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/links");
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/links`; // Use environment variable
+      const response = await axios.get(apiUrl);
       setLinks(response.data); // Assuming the API returns an array of links
     } catch (error) {
       console.error("Error fetching links:", error);

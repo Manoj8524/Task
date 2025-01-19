@@ -7,17 +7,20 @@ const HomeMain = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from the backend API
-    axios
-      .get('http://localhost:5000/api/content')
-      .then((response) => {
+    // Fetch data from the backend API using the environment variable
+    const fetchData = async () => {
+      try {
+        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/content`; // Use environment variable
+        const response = await axios.get(apiUrl);
         setData(response.data);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
-      });
+      }
+    };
+    
+    fetchData();
   }, []);
 
   // Define columns for the Table

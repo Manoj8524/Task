@@ -10,14 +10,17 @@ const AdvertisementPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   // Fetch all ads
   const fetchAds = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/ads');
+      const response = await axios.get(`${API_BASE_URL}/ads`);
       setAds(response.data);
     } catch (error) {
       console.error('Error fetching ads:', error);
+      message.error('Failed to fetch ads');
     } finally {
       setLoading(false);
     }
@@ -37,10 +40,12 @@ const AdvertisementPage = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/ads/${id}`);
+      await axios.delete(`${API_BASE_URL}/ads/${id}`);
       fetchAds(); // Refresh ads list after deletion
+      message.success('Ad deleted successfully');
     } catch (error) {
       console.error('Error deleting ad:', error);
+      message.error('Failed to delete ad');
     }
   };
 
@@ -49,18 +54,19 @@ const AdvertisementPage = () => {
     try {
       if (adToEdit) {
         // Update ad
-        await axios.put(`http://localhost:5000/ads/${adToEdit._id}`, values);
+        await axios.put(`${API_BASE_URL}/ads/${adToEdit._id}`, values);
+        message.success('Ad updated successfully');
       } else {
         // Create new ad
-        await axios.post('http://localhost:5000/ads', values);
+        await axios.post(`${API_BASE_URL}/ads`, values);
+        message.success('Ad created successfully');
       }
       fetchAds(); // Refresh the list after submit
       setIsModalVisible(false); // Close the modal
-      message.success('Ad successfully saved!');
       setAdToEdit(null); // Reset editing state
     } catch (error) {
-      message.error('Error saving ad');
-      console.error(error);
+      console.error('Error saving ad:', error);
+      message.error('Failed to save ad');
     }
   };
 
@@ -95,21 +101,21 @@ const AdvertisementPage = () => {
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <div className="flex space-x-2">
+        <div>
           <Button type="primary" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button type="danger" onClick={() => handleDelete(record._id)}>Delete</Button>
+          <Button type="danger" onClick={() => handleDelete(record._id)} style={{ marginLeft: '10px' }}>Delete</Button>
         </div>
       ),
     },
   ];
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Advertisement Management</h1>
+    <div style={{ padding: '20px' }}>
+      <h1>Advertisement Management</h1>
       <Button
         type="primary"
         onClick={() => setIsModalVisible(true)}
-        className="mb-4"
+        style={{ marginBottom: '20px' }}
       >
         Add New Ad
       </Button>
@@ -119,7 +125,7 @@ const AdvertisementPage = () => {
         dataSource={ads}
         rowKey="_id"
         loading={loading}
-        pagination={false}
+        pagination={{ pageSize: 5 }}
       />
 
       {/* Modal for creating/editing an ad */}
@@ -199,11 +205,11 @@ const AdvertisementPage = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item className="flex justify-end">
+          <Form.Item>
             <Button
               type="default"
               onClick={() => setIsModalVisible(false)}
-              className="mr-2"
+              style={{ marginRight: '10px' }}
             >
               Cancel
             </Button>

@@ -10,10 +10,12 @@ const FooterPage = () => {
   const [form] = Form.useForm();
   const [iconForm] = Form.useForm();
 
+  const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}/api`;
+
   // Fetch footer data
   const fetchFooter = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/footer');
+      const { data } = await axios.get(`${API_BASE_URL}/footer`);
       setFooter(data);
     } catch (error) {
       message.error('Failed to fetch footer');
@@ -28,10 +30,10 @@ const FooterPage = () => {
   const handleFooterSubmit = async (values) => {
     try {
       if (footer) {
-        await axios.put(`http://localhost:5000/api/footer/${footer._id}`, values);
+        await axios.put(`${API_BASE_URL}/footer/${footer._id}`, values);
         message.success('Footer updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/footer', values);
+        await axios.post(`${API_BASE_URL}/footer`, values);
         message.success('Footer added successfully');
       }
       fetchFooter();
@@ -48,11 +50,11 @@ const FooterPage = () => {
         const updatedIcons = footer.icons.map((icon) =>
           icon._id === editingIcon._id ? { ...icon, ...values } : icon
         );
-        await axios.put(`http://localhost:5000/api/footer/${footer._id}`, { ...footer, icons: updatedIcons });
+        await axios.put(`${API_BASE_URL}/footer/${footer._id}`, { ...footer, icons: updatedIcons });
         message.success('Icon updated successfully');
       } else {
         const updatedIcons = [...footer.icons, values];
-        await axios.put(`http://localhost:5000/api/footer/${footer._id}`, { ...footer, icons: updatedIcons });
+        await axios.put(`${API_BASE_URL}/footer/${footer._id}`, { ...footer, icons: updatedIcons });
         message.success('Icon added successfully');
       }
       fetchFooter();
@@ -66,12 +68,29 @@ const FooterPage = () => {
   const handleDeleteIcon = async (iconId) => {
     try {
       const updatedIcons = footer.icons.filter((icon) => icon._id !== iconId);
-      await axios.put(`http://localhost:5000/api/footer/${footer._id}`, { ...footer, icons: updatedIcons });
+      await axios.put(`${API_BASE_URL}/footer/${footer._id}`, { ...footer, icons: updatedIcons });
       message.success('Icon deleted successfully');
       fetchFooter();
     } catch (error) {
       message.error('Failed to delete icon');
     }
+  };
+
+  const handleEditFooter = () => {
+    form.setFieldsValue(footer);
+    setIsFooterModalVisible(true);
+  };
+
+  const handleEditIcon = (icon) => {
+    setEditingIcon(icon);
+    iconForm.setFieldsValue(icon);
+    setIsIconModalVisible(true);
+  };
+
+  const handleAddIcon = () => {
+    setEditingIcon(null);
+    iconForm.resetFields();
+    setIsIconModalVisible(true);
   };
 
   const columns = [
@@ -90,23 +109,6 @@ const FooterPage = () => {
       ),
     },
   ];
-
-  const handleEditFooter = () => {
-    form.setFieldsValue(footer);
-    setIsFooterModalVisible(true);
-  };
-
-  const handleEditIcon = (icon) => {
-    setEditingIcon(icon);
-    iconForm.setFieldsValue(icon);
-    setIsIconModalVisible(true);
-  };
-
-  const handleAddIcon = () => {
-    setEditingIcon(null);
-    iconForm.resetFields();
-    setIsIconModalVisible(true);
-  };
 
   return (
     <div>

@@ -5,10 +5,11 @@ const ServicePage = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch services from the backend
+  // Fetch services from the backend using environment variable for API URL
   const fetchServices = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/services");
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/services`; // Use environment variable
+      const response = await axios.get(apiUrl);
       setServices(response.data);
       setLoading(false);
     } catch (error) {

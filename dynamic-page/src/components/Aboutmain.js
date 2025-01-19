@@ -6,9 +6,12 @@ const AboutPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Use the environment variable for the base URL
+    const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/about`;
+
     // Fetch About page data
     axios
-      .get("http://localhost:5000/api/about")
+      .get(apiUrl)
       .then((response) => {
         setAboutData(response.data);
         setLoading(false);

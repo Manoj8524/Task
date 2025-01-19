@@ -7,10 +7,12 @@ const HeaderPage = () => {
   const [header, setHeader] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   useEffect(() => {
     const fetchHeader = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/header');
+        const response = await axios.get(`${API_BASE_URL}/api/header`);
         setHeader(response.data);
         setLoading(false);
       } catch (error) {
@@ -19,11 +21,11 @@ const HeaderPage = () => {
       }
     };
     fetchHeader();
-  }, []);
+  }, [API_BASE_URL]);
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post('http://localhost:5000/api/header/add', values);
+      await axios.post(`${API_BASE_URL}/api/header/add`, values);
       notification.success({ message: 'Header saved successfully' });
     } catch (error) {
       console.error('Error saving header:', error);

@@ -15,7 +15,8 @@ const Footer = () => {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/footer');
+        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/footer`; // Use environment variable for API base URL
+        const response = await axios.get(apiUrl);
         setFooterData(response.data);
       } catch (err) {
         console.error('Error fetching footer data:', err);

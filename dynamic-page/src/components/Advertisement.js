@@ -6,10 +6,11 @@ const AdvertisementList = () => {
   const [hiddenAds, setHiddenAds] = useState(new Set()); // Track hidden ads
 
   useEffect(() => {
-    // Fetch ads from the backend (GET request)
+    // Fetch ads from the backend (GET request) using the environment variable
     const fetchAds = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/ads');
+        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/ads`; // Use environment variable for base URL
+        const response = await axios.get(apiUrl);
         setAds(response.data);
       } catch (error) {
         console.error('Error fetching ads:', error);
@@ -28,7 +29,11 @@ const AdvertisementList = () => {
         !hiddenAds.has(ad._id) && (
           <div key={ad._id} className="ad-card" style={{ position: 'relative', marginBottom: '20px' }}>
             <h3>{ad.title}</h3>
-            <img src={`http://localhost:5000/${ad.src}`} alt={ad.title} style={{ width: '100%', borderRadius: '8px' }} />
+            <img
+              src={`${process.env.REACT_APP_API_BASE_URL}/${ad.src}`} // Use environment variable for the image URL
+              alt={ad.title}
+              style={{ width: '100%', borderRadius: '8px' }}
+            />
             <p>{ad.description}</p>
 
             {/* Close button */}

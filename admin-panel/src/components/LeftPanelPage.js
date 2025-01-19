@@ -9,11 +9,13 @@ const LeftPanelPage = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Get the base URL from the .env file
+
   // Fetch all links
   const fetchLinks = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('http://localhost:5000/api/links');
+      const { data } = await axios.get(`${API_BASE_URL}/api/links`);
       setLinks(data);
     } catch (error) {
       message.error('Failed to fetch links');
@@ -30,10 +32,10 @@ const LeftPanelPage = () => {
   const handleSubmit = async (values) => {
     try {
       if (editingLink) {
-        await axios.put(`http://localhost:5000/api/links/${editingLink._id}`, values);
+        await axios.put(`${API_BASE_URL}/api/links/${editingLink._id}`, values);
         message.success('Link updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/links', values);
+        await axios.post(`${API_BASE_URL}/api/links`, values);
         message.success('Link added successfully');
       }
       fetchLinks();
@@ -46,7 +48,7 @@ const LeftPanelPage = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/links/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/links/${id}`);
       message.success('Link deleted successfully');
       fetchLinks();
     } catch (error) {
