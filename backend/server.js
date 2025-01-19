@@ -34,6 +34,8 @@ app.use("/api/services", serviceRoutes);
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 
 
 const PORT = process.env.PORT || 5000;
