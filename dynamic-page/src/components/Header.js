@@ -8,7 +8,6 @@ const Header = () => {
   useEffect(() => {
     const fetchHeaderData = async () => {
       try {
-        console.log('API Base URL:', process.env.REACT_APP_API_BASE_URL); // Check the value
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/header`);
         setHeaderData(response.data);
       } catch (error) {
@@ -43,7 +42,7 @@ const Header = () => {
     textSize = "24px",
     backgroundColor = "#fff",
     height = "60px",
-    logo = {},
+    logo = "", // Default to empty if no logo is provided
   } = headerData;
 
   return (
@@ -57,23 +56,23 @@ const Header = () => {
     >
       {/* Logo Section */}
       <div className="ml-6">
-        {logo.imageUrl ? (
+        {logo ? (
           <img
-            src={logo.imageUrl}
+            src={logo}
             alt="Logo"
             style={{
-              width: logo.size || "40px",
-              height: logo.size || "40px",
-              borderRadius: logo.borderRadius || "50%",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
             }}
             className="w-10 h-10 sm:w-12 sm:h-12"
           />
         ) : (
           <div
             style={{
-              width: logo.size || "40px",
-              height: logo.size || "40px",
-              borderRadius: logo.borderRadius || "50%",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
               backgroundColor: "gray",
             }}
             className="flex justify-center items-center text-white"
