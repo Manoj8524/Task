@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Input, Button, notification, Spin, Table, Modal, Space, Popconfirm } from 'antd';
+import { Form, Input, Button, notification, Spin, Table, Modal, Space, Popconfirm, Row, Col } from 'antd';
 import { SaveOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const HeaderPage = () => {
@@ -113,13 +113,39 @@ const HeaderPage = () => {
     return <Spin />;
   }
 
+  const containerStyle = {
+    padding: '1rem',
+    maxWidth: '100%',
+  };
+
+  const titleStyle = {
+    fontSize: 'calc(1.5rem + 0.5vw)',
+    textAlign: 'center',
+    marginBottom: '1rem',
+  };
+
+  const buttonStyle = {
+    marginBottom: '20px',
+    fontSize: 'calc(0.8rem + 0.2vw)',
+  };
+
+  const tableWrapperStyle = {
+    overflowX: 'auto',
+  };
+
   return (
-    <div className="p-4">
-      <h2>Header Configuration</h2>
-      <Button type="primary" onClick={() => setIsModalVisible(true)} style={{ marginBottom: '20px' }}>
+    <div style={containerStyle}>
+      <h1 style={titleStyle}>Header Management</h1>
+      <Button
+        type="primary"
+        onClick={() => setIsModalVisible(true)}
+        style={buttonStyle}
+      >
         Add New Header
       </Button>
-      <Table dataSource={headers} columns={columns} rowKey="_id" />
+      <div style={tableWrapperStyle}>
+        <Table dataSource={headers} columns={columns} rowKey="_id" />
+      </div>
 
       <Modal
         title={editingHeader ? 'Edit Header' : 'Add Header'}
@@ -135,25 +161,48 @@ const HeaderPage = () => {
           initialValues={editingHeader || {}}
           onFinish={handleSubmit}
         >
-          <Form.Item label="Text" name="text" rules={[{ required: true, message: 'Text is required' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="Text Color" name="textColor">
-            <Input type="color" />
-          </Form.Item>
-          <Form.Item label="Text Size" name="textSize">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Background Color" name="backgroundColor">
-            <Input type="color" />
-          </Form.Item>
-          <Form.Item label="Height" name="height">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Logo Image URL" name="logo">
-            <Input placeholder="Enter logo image URL" />
-          </Form.Item>
-          <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+          <Row gutter={16}>
+            <Col xs={24} sm={12}>
+              <Form.Item
+                label="Text"
+                name="text"
+                rules={[{ required: true, message: 'Text is required' }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Text Color" name="textColor">
+                <Input type="color" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Text Size" name="textSize">
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Background Color" name="backgroundColor">
+                <Input type="color" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Height" name="height">
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Logo Image URL" name="logo">
+                <Input placeholder="Enter logo image URL" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<SaveOutlined />}
+            block
+          >
             Save
           </Button>
         </Form>

@@ -19,8 +19,7 @@ const AdvertisementPage = () => {
       const response = await axios.get(`${API_BASE_URL}/ads`);
       setAds(response.data);
     } catch (error) {
-      console.error('Error fetching ads:', error);
-      message.error('Failed to fetch ads');
+      message.error('Failed to fetch advertisements.');
     } finally {
       setLoading(false);
     }
@@ -30,47 +29,55 @@ const AdvertisementPage = () => {
     fetchAds();
   }, []);
 
-  // Handle ad editing
   const handleEdit = (ad) => {
     setAdToEdit(ad);
-    form.setFieldsValue(ad); // Set form fields to ad values
-    setIsModalVisible(true); // Open the modal
+    form.setFieldsValue(ad);
+    setIsModalVisible(true);
   };
 
-  // Handle delete
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_BASE_URL}/ads/${id}`);
-      fetchAds(); // Refresh ads list after deletion
-      message.success('Ad deleted successfully');
+      fetchAds();
+      message.success('Ad deleted successfully.');
     } catch (error) {
-      console.error('Error deleting ad:', error);
-      message.error('Failed to delete ad');
+      message.error('Failed to delete advertisement.');
     }
   };
 
-  // Handle ad creation/update (POST/PUT)
   const handleSubmit = async (values) => {
     try {
-      if (adToEdit) {
-        // Update ad
-        await axios.put(`${API_BASE_URL}/ads/${adToEdit._id}`, values);
-        message.success('Ad updated successfully');
-      } else {
-        // Create new ad
-        await axios.post(`${API_BASE_URL}/ads`, values);
-        message.success('Ad created successfully');
+      const formData = new FormData();
+      formData.append('title', values.title);
+      formData.append('description', values.description);
+      formData.append('type', values.type);
+      formData.append('size', values.size);
+      formData.append('position', values.position);
+
+      // Add file to formData if uploaded
+      if (values.file && values.file.file) {
+        formData.append('file', values.file.file);
       }
-      fetchAds(); // Refresh the list after submit
-      setIsModalVisible(false); // Close the modal
-      setAdToEdit(null); // Reset editing state
+
+      if (adToEdit) {
+        await axios.put(`${API_BASE_URL}/ads/${adToEdit._id}`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        message.success('Advertisement updated successfully.');
+      } else {
+        await axios.post(`${API_BASE_URL}/ads`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        message.success('Advertisement created successfully.');
+      }
+      fetchAds();
+      setIsModalVisible(false);
+      setAdToEdit(null);
     } catch (error) {
-      console.error('Error saving ad:', error);
-      message.error('Failed to save ad');
+      message.error('Failed to save advertisement.');
     }
   };
 
-  // Table columns
   const columns = [
     {
       title: 'Title',
@@ -103,47 +110,39 @@ const AdvertisementPage = () => {
       render: (text, record) => (
         <div>
           <Button type="primary" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button type="danger" onClick={() => handleDelete(record._id)} style={{ marginLeft: '10px' }}>Delete</Button>
+          <Button type="danger" onClick={() => handleDelete(record._id)} style={{ marginLeft: 10 }}>Delete</Button>
         </div>
       ),
     },
   ];
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Advertisement Management</h1>
-      <Button
-        type="primary"
-        onClick={() => setIsModalVisible(true)}
-        style={{ marginBottom: '20px' }}
-      >
-        Add New Ad
+    <div style={{ padding: 20 }}>
+      <h1 style={{ textAlign: 'center' }}>Advertisement Management</h1>
+      <Button type="primary" onClick={() => setIsModalVisible(true)} style={{ marginBottom: 20 }}>
+        Add New Advertisement
       </Button>
-
       <Table
         columns={columns}
         dataSource={ads}
         rowKey="_id"
         loading={loading}
         pagination={{ pageSize: 5 }}
+        style={{ overflowX: 'auto' }}
       />
 
-      {/* Modal for creating/editing an ad */}
+      {/* Modal */}
       <Modal
-        title={adToEdit ? 'Edit Ad' : 'Add New Ad'}
+        title={adToEdit ? 'Edit Advertisement' : 'Add New Advertisement'}
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-        >
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
             label="Title"
             name="title"
-            rules={[{ required: true, message: 'Please input the ad title!' }]}
+            rules={[{ required: true, message: 'Please enter the advertisement title.' }]}
           >
             <Input />
           </Form.Item>
@@ -151,15 +150,15 @@ const AdvertisementPage = () => {
           <Form.Item
             label="Description"
             name="description"
-            rules={[{ required: true, message: 'Please input the ad description!' }]}
+            rules={[{ required: true, message: 'Please enter a description.' }]}
           >
-            <Input />
+            <Input.TextArea />
           </Form.Item>
 
           <Form.Item
             label="Type"
             name="type"
-            rules={[{ required: true, message: 'Please select the ad type!' }]}
+            rules={[{ required: true, message: 'Please select the type.' }]}
           >
             <Select>
               <Select.Option value="image">Image</Select.Option>
@@ -171,7 +170,7 @@ const AdvertisementPage = () => {
           <Form.Item
             label="Size"
             name="size"
-            rules={[{ required: true, message: 'Please select the ad size!' }]}
+            rules={[{ required: true, message: 'Please select the size.' }]}
           >
             <Select>
               <Select.Option value="large">Large</Select.Option>
@@ -182,7 +181,7 @@ const AdvertisementPage = () => {
           <Form.Item
             label="Position"
             name="position"
-            rules={[{ required: true, message: 'Please select the ad position!' }]}
+            rules={[{ required: true, message: 'Please select the position.' }]}
           >
             <Select>
               <Select.Option value="top-right">Top Right</Select.Option>
@@ -191,30 +190,18 @@ const AdvertisementPage = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            label="Upload File"
-            name="file"
-            valuePropName="fileList"
-            getValueFromEvent={({ file }) => (file ? [file] : [])}
-          >
-            <Upload
-              beforeUpload={() => false} // Prevent automatic upload
-              accept="image/*,video/*,gif/*"
-            >
-              <Button icon={<UploadOutlined />}>Upload</Button>
+          <Form.Item label="Upload" name="file">
+            <Upload beforeUpload={() => false} accept="image/*,video/*,.gif">
+              <Button icon={<UploadOutlined />}>Upload File</Button>
             </Upload>
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="default"
-              onClick={() => setIsModalVisible(false)}
-              style={{ marginRight: '10px' }}
-            >
+            <Button type="default" onClick={() => setIsModalVisible(false)} style={{ marginRight: 10 }}>
               Cancel
             </Button>
             <Button type="primary" htmlType="submit">
-              {adToEdit ? 'Update Ad' : 'Add Ad'}
+              {adToEdit ? 'Update Advertisement' : 'Add Advertisement'}
             </Button>
           </Form.Item>
         </Form>

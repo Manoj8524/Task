@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, message } from 'antd';
+import { Table, Button, Modal, Form, Input, message, Row, Col } from 'antd';
 import axios from 'axios';
 
 const LeftPanelPage = () => {
@@ -9,9 +9,8 @@ const LeftPanelPage = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Get the base URL from the .env file
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-  // Fetch all links
   const fetchLinks = async () => {
     setLoading(true);
     try {
@@ -28,7 +27,6 @@ const LeftPanelPage = () => {
     fetchLinks();
   }, []);
 
-  // Handle form submission
   const handleSubmit = async (values) => {
     try {
       if (editingLink) {
@@ -45,7 +43,6 @@ const LeftPanelPage = () => {
     }
   };
 
-  // Handle delete
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API_BASE_URL}/api/links/${id}`);
@@ -90,22 +87,31 @@ const LeftPanelPage = () => {
 
   return (
     <div>
-      <h2>Manage Links</h2>
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 20 }}>
-        Add Link
-      </Button>
+      <h1 style={{ fontSize: 'clamp(20px, 5vw, 36px)', textAlign: 'center' }}>
+        Left-Panel Management
+      </h1>
+      <Row justify="end">
+        <Col>
+          <Button type="primary" onClick={handleAdd} style={{ marginBottom: 20 }}>
+            Add Link
+          </Button>
+        </Col>
+      </Row>
       <Table
         dataSource={links}
         columns={columns}
         rowKey="_id"
         loading={loading}
         pagination={{ pageSize: 5 }}
+        scroll={{ x: 'max-content' }}
       />
       <Modal
         title={editingLink ? 'Edit Link' : 'Add Link'}
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         onOk={() => form.submit()}
+        width="90%"
+        bodyStyle={{ padding: '20px' }}
       >
         <Form
           form={form}
