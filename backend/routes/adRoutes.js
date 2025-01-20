@@ -5,21 +5,21 @@ const multer = require('multer');
 const path = require('path');
 const Ad = require('../models/adModel');
 
-// Set up multer for file uploads
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads'); // Save files in the "uploads" folder
+    cb(null, './uploads'); 
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Save the file with a unique name
+    cb(null, Date.now() + path.extname(file.originalname)); 
   }
 });
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // Limit the file size to 10 MB
+  limits: { fileSize: 10 * 1024 * 1024 }, 
   fileFilter: (req, file, cb) => {
-    // Accept only specific file types
+   
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/webm'];
     if (!allowedTypes.includes(file.mimetype)) {
       return cb(new Error('Invalid file type. Only image and video files are allowed.'));
@@ -28,7 +28,7 @@ const upload = multer({
   }
 });
 
-// POST a new ad (with file upload)
+
 router.post('/', upload.single('file'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
@@ -40,7 +40,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     title,
     description,
     type,
-    src: req.file.path, // Store the file path
+    src: req.file.path, 
     size,
     position
   });
@@ -53,7 +53,7 @@ router.post('/', upload.single('file'), async (req, res) => {
   }
 });
 
-// GET all ads
+
 router.get('/', async (req, res) => {
   try {
     const ads = await Ad.find();
@@ -63,13 +63,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// PUT (update) an existing ad
+
 router.put('/:id', upload.single('file'), async (req, res) => {
   const { id } = req.params;
   let updateData = req.body;
 
   if (req.file) {
-    updateData.src = req.file.path; // If a new file is uploaded, update the file path
+    updateData.src = req.file.path; 
   }
 
   try {
@@ -81,7 +81,6 @@ router.put('/:id', upload.single('file'), async (req, res) => {
   }
 });
 
-// DELETE an ad
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {

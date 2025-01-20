@@ -5,10 +5,10 @@ const ContactPage = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch contact messages from the backend
+ 
   const fetchMessages = async () => {
     try {
-      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/contact`; // Use environment variable for base URL
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/contact`; 
       const response = await axios.get(apiUrl);
       setMessages(response.data);
       setLoading(false);

@@ -12,7 +12,6 @@ const AdvertisementPage = () => {
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-  // Fetch all ads
   const fetchAds = async () => {
     setLoading(true);
     try {
@@ -54,7 +53,6 @@ const AdvertisementPage = () => {
       formData.append('size', values.size);
       formData.append('position', values.position);
 
-      // Add file to formData if uploaded
       if (values.file && values.file.file) {
         formData.append('file', values.file.file);
       }
@@ -131,7 +129,7 @@ const AdvertisementPage = () => {
         style={{ overflowX: 'auto' }}
       />
 
-      {/* Modal */}
+      
       <Modal
         title={adToEdit ? 'Edit Advertisement' : 'Add New Advertisement'}
         visible={isModalVisible}

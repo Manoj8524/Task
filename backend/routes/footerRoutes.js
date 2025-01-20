@@ -1,8 +1,8 @@
 const express = require('express');
-const Footer = require('../models/Footer'); // Adjust the path as necessary
+const Footer = require('../models/Footer');
 const router = express.Router();
 
-// Get footer data
+
 router.get('/footer', async (req, res) => {
   try {
     const footer = await Footer.findOne();
@@ -12,7 +12,7 @@ router.get('/footer', async (req, res) => {
   }
 });
 
-// Create or update footer
+
 router.post('/footer', async (req, res) => {
   try {
     const { content, contentColor, contentSize, backgroundColor, icons } = req.body;
@@ -29,7 +29,7 @@ router.post('/footer', async (req, res) => {
   }
 });
 
-// Update footer by ID
+
 router.put('/footer/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -51,7 +51,7 @@ router.put('/footer/:id', async (req, res) => {
   }
 });
 
-// Add a new icon
+
 router.post('/footer/icon', async (req, res) => {
   try {
     const { platform, url, color, size, image } = req.body;
@@ -70,7 +70,7 @@ router.post('/footer/icon', async (req, res) => {
   }
 });
 
-// Update an existing icon
+
 router.put('/footer/icon/:iconId', async (req, res) => {
   try {
     const { iconId } = req.params;
@@ -95,7 +95,6 @@ router.put('/footer/icon/:iconId', async (req, res) => {
   }
 });
 
-// Delete an icon
 router.delete('/footer/icon/:iconId', async (req, res) => {
   try {
     const { iconId } = req.params;

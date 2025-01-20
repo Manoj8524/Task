@@ -2,7 +2,7 @@ const express = require('express');
 const Link = require('../models/Link');
 const router = express.Router();
 
-// Get all links
+
 router.get('/', async (req, res) => {
   try {
     const links = await Link.find();
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create a new link
+
 router.post('/', async (req, res) => {
   const { name, url, icon, textColor, textSize, backgroundColor, width } = req.body;
 
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update a link
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -46,7 +46,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a link
+
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 

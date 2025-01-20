@@ -6,10 +6,10 @@ const AboutPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Use the environment variable for the base URL
+   
     const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/about`;
 
-    // Fetch About page data
+   
     axios
       .get(apiUrl)
       .then((response) => {
@@ -39,7 +39,7 @@ const AboutPage = () => {
       <h1 className="text-3xl font-bold text-center mb-4">{aboutData.mission}</h1>
       <p className="text-gray-700 text-center mb-8">{aboutData.overview}</p>
 
-      {/* Team Section */}
+    
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Our Team</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -60,7 +60,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Values Section */}
+     
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
         <ul className="list-disc list-inside">
@@ -72,7 +72,7 @@ const AboutPage = () => {
         </ul>
       </section>
 
-      {/* Contact Section */}
+     
       <section>
         <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
         <p className="text-gray-700">{aboutData.contact}</p>

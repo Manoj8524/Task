@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const About = require("../models/about.model");
 
-// **GET**: Fetch About Page Data
+
 router.get("/", async (req, res) => {
   try {
     const aboutData = await About.findOne();
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// **POST**: Create New About Page Data
+
 router.post("/", async (req, res) => {
   const { mission, overview, team, values, contact } = req.body;
 
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// **PUT**: Update About Page Data
+
 router.put("/", async (req, res) => {
   const { mission, overview, team, values, contact } = req.body;
 
@@ -51,7 +51,7 @@ router.put("/", async (req, res) => {
   }
 });
 
-// **DELETE**: Delete About Page Data
+
 router.delete("/", async (req, res) => {
   try {
     const deletedData = await About.deleteOne();

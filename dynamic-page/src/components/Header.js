@@ -42,7 +42,7 @@ const Header = () => {
     textSize = "24px",
     backgroundColor = "#fff",
     height = "60px",
-    logo = "", // Default to empty if no logo is provided
+    logo = "", 
   } = headerData;
 
   return (
@@ -54,7 +54,7 @@ const Header = () => {
       }}
       className="flex justify-between items-center px-4 shadow-md"
     >
-      {/* Logo Section */}
+      
       <div className="ml-6">
         {logo ? (
           <img
@@ -82,7 +82,7 @@ const Header = () => {
         )}
       </div>
 
-      {/* Header Text */}
+    
       <h1
         style={{
           fontSize: textSize,

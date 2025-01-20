@@ -3,7 +3,7 @@ const Contact = require("../models/Contact");
 
 const router = express.Router();
 
-// GET all contact messages
+
 router.get("/", async (req, res) => {
   try {
     const messages = await Contact.find();
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST a new contact message
+
 router.post("/", async (req, res) => {
   const { name, email, subject, message, phone, address } = req.body;
 
@@ -23,8 +23,8 @@ router.post("/", async (req, res) => {
       email, 
       subject, 
       message, 
-      phone: phone || "", // Set default value if phone is not provided
-      address: address || "" // Set default value if address is not provided
+      phone: phone || "", 
+      address: address || "" 
     });
     await newMessage.save();
     res.status(201).json(newMessage);
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// DELETE a contact message by ID
+
 router.delete("/:id", async (req, res) => {
   try {
     await Contact.findByIdAndDelete(req.params.id);

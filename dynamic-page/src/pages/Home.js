@@ -67,35 +67,37 @@ const Home = () => {
     <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-r from-gray-50 to-gray-200">
       <title>Dynamic Page - Welcome</title>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:flex-row "> {/* Added padding to adjust for fixed LeftPanel */}
+      <div className="flex-1 flex flex-col lg:flex-row "> 
         
-        {/* Left Panel (Fixed) */}
+      
         <div className="fixed top-0 left-0 h-screen  shadow-md z-10">
           <LeftPanel links={links} />
         </div>
 
-        {/* Content Section */}
-        <div className="flex-1 flex flex-col ml-1/4"> {/* Added margin-left to prevent overlap with LeftPanel */}
+       
+        <div className="flex-1 flex flex-col ml-1/4"> 
+
+
+        <div className="absolute top-0 right-0 p-4 z-10">
+            <Advertisement />
+          </div>
           
-          {/* Header */}
+        
           <ErrorBoundary>
             <Header headerData={data} />
           </ErrorBoundary>
 
-          {/* Advertisement Section */}
           {data?.ads?.length > 0 && (
             <section className="p-4">
               <Advertisement ads={data.ads} />
             </section>
           )}
 
-          {/* Main Content */}
           <div className="flex-1 flex flex-col">
             <HomeMain data={data} />
           </div>
 
-          {/* Footer */}
+        
           <footer className="bg-gray-900 text-white text-center py-3 text-sm md:text-base">
             <Footer footerContent={data?.footerContent} />
           </footer>

@@ -71,7 +71,6 @@ const HomeMain = () => {
         Explore the features and content below.
       </div>
 
-      {/* Cards for Feature Highlights */}
       <section className="mb-6">
         <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-700 mb-3">
           Feature Highlights
@@ -108,7 +107,6 @@ const HomeMain = () => {
         </div>
       </section>
 
-      {/* Table to display Features */}
       <section className="mb-6">
         <h3 className="text-base md:text-lg lg:text-xl font-semibold text-gray-700 mb-3">
           Feature Details
@@ -119,7 +117,7 @@ const HomeMain = () => {
           dataSource={data.features}
           rowKey="title"
           pagination={{ pageSize: 5 }}
-          scroll={{ x: '100%' }} // Enables horizontal scroll on smaller screens
+          scroll={{ x: '100%' }} 
           className="text-sm md:text-base"
         />
       </section>

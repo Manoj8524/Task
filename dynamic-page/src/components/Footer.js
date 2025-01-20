@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import * as brandIcons from '@fortawesome/free-brands-svg-icons'; // Import all brand icons
+import * as brandIcons from '@fortawesome/free-brands-svg-icons'; 
 
-// Add all icons to the library
+
 Object.keys(brandIcons).forEach((key) => {
   if (key.startsWith('fa')) library.add(brandIcons[key]);
 });
@@ -15,7 +15,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/footer`; // Use environment variable for API base URL
+        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/footer`; 
         const response = await axios.get(apiUrl);
         setFooterData(response.data);
       } catch (err) {
@@ -47,7 +47,7 @@ const Footer = () => {
           {footerData.content}
         </p>
 
-        {/* Social Media Icons */}
+        
         <div className="flex justify-center flex-wrap space-x-4 sm:space-x-6">
           {footerData.icons.map((icon, index) => (
             <a

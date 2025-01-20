@@ -12,7 +12,7 @@ const FooterPage = () => {
 
   const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}/api`;
 
-  // Fetch footer data
+  
   const fetchFooter = async () => {
     try {
       const { data } = await axios.get(`${API_BASE_URL}/footer`);
@@ -26,7 +26,7 @@ const FooterPage = () => {
     fetchFooter();
   }, []);
 
-  // Handle Footer form submission
+ 
   const handleFooterSubmit = async (values) => {
     try {
       if (footer) {
@@ -43,7 +43,7 @@ const FooterPage = () => {
     }
   };
 
-  // Handle Icon form submission
+ 
   const handleIconSubmit = async (values) => {
     try {
       if (editingIcon) {
@@ -64,7 +64,7 @@ const FooterPage = () => {
     }
   };
 
-  // Handle delete icon
+  
   const handleDeleteIcon = async (iconId) => {
     try {
       const updatedIcons = footer.icons.filter((icon) => icon._id !== iconId);
@@ -147,7 +147,7 @@ const FooterPage = () => {
         />
       )}
 
-      {/* Footer Modal */}
+    
       <Modal
         title={footer ? 'Edit Footer' : 'Add Footer'}
         visible={isFooterModalVisible}
@@ -170,7 +170,6 @@ const FooterPage = () => {
         </Form>
       </Modal>
 
-      {/* Icon Modal */}
       <Modal
         title={editingIcon ? 'Edit Icon' : 'Add Icon'}
         visible={isIconModalVisible}

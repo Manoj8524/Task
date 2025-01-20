@@ -6,31 +6,31 @@ const LeftPanel = () => {
   const [links, setLinks] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
-  // Fetch links from API
+ 
   const fetchLinks = async () => {
     try {
-      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/links`; // Use environment variable
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/api/links`; 
       const response = await axios.get(apiUrl);
-      setLinks(response.data); // Assuming the API returns an array of links
+      setLinks(response.data); 
     } catch (error) {
       console.error("Error fetching links:", error);
     }
   };
 
-  // Fetch links on component mount
+  
   useEffect(() => {
     fetchLinks();
   }, []);
 
   return (
     <div className="relative">
-      {/* Panel - Initially hidden with only the icon visible */}
+     
       <div
         className={`${
           expanded ? "w-40" : "w-0"
         } min-h-screen fixed top-0 left-0 bg-gray-800 text-white overflow-hidden transition-all duration-300 ease-in-out`}
       >
-        {/* Navigation Links */}
+        
         <ul className={`space-y-4 mt-16 ${expanded ? "" : "hidden"}`}>
           {links && links.length > 0 ? (
             links.map((link, index) => (
@@ -56,7 +56,7 @@ const LeftPanel = () => {
         </ul>
       </div>
 
-      {/* Toggle Button (Icon in top left corner) */}
+    
       <div
         className={`absolute top-2 left-2 p-2 cursor-pointer z-20 bg-gray-800 rounded-full text-white`}
         onClick={() => setExpanded(!expanded)}

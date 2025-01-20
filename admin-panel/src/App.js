@@ -4,7 +4,7 @@ import LeftPanel from './components/LeftPanel';
 import LeftPanelPage from './components/LeftPanelPage';
 import FooterPage from './components/FooterPage';
 import HeaderPage from './components/HeaderPage';
-import AdvertisementPage from './components/AdvertisementPage';  // Add this import
+import AdvertisementPage from './components/AdvertisementPage';  
 
 const App = () => (
   <Router>
@@ -16,7 +16,7 @@ const App = () => (
             <Route path="/left-panel" element={<LeftPanelPage />} />
             <Route path="/footer" element={<FooterPage />} />
             <Route path="/header" element={<HeaderPage />} />
-            <Route path="/advertisement" element={<AdvertisementPage />} /> {/* New Route */}
+            <Route path="/advertisement" element={<AdvertisementPage />} /> 
           </Routes>
         </div>
       </div>

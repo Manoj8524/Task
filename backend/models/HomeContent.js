@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define the schema for content
+
 const ContentSchema = new mongoose.Schema({
   features: [
     {
@@ -20,5 +20,5 @@ const ContentSchema = new mongoose.Schema({
   ],
 });
 
-// Export the model
+
 module.exports = mongoose.model('Content', ContentSchema);

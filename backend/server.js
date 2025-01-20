@@ -18,19 +18,19 @@ dotenv.config();
 const app = express();
 connectDB();
 
-// List of allowed origins (replace with your actual URLs)
+
 const allowedOrigins = [
-  'http://localhost:3000',  // Example: Frontend local development URL
+  'http://localhost:3000',  
   'http://localhost:3001',
   'https://task-ss1p.vercel.app',
   'https://task-dynamic.vercel.app',
   'http://example4.com'
 ];
 
-// CORS configuration to allow only specific origins
+
 app.use(cors({
   origin: function(origin, callback) {
-    // Check if the incoming request's origin is in the allowedOrigins array
+   
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {

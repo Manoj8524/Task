@@ -11,7 +11,7 @@ const LeftPanel = () => {
 
   return (
     <div>
-      {/* Button for smaller screens */}
+     
       <Button
         className="menu-toggle"
         icon={<MenuOutlined />}
@@ -26,7 +26,7 @@ const LeftPanel = () => {
         }}
       />
       
-      {/* Drawer for mobile screens */}
+     
       <Drawer
         title="Admin Panel"
         placement="left"

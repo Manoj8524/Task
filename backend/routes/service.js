@@ -3,7 +3,7 @@ const Service = require("../models/Service");
 
 const router = express.Router();
 
-// GET all services
+
 router.get("/", async (req, res) => {
   try {
     const services = await Service.find();
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST a new service
+
 router.post("/", async (req, res) => {
     try {
       const services = Array.isArray(req.body) ? req.body : [req.body];
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   });
   
 
-// PUT (update) a service by ID
+
 router.put("/:id", async (req, res) => {
   const { title, description, price } = req.body;
 
@@ -41,7 +41,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE a service by ID
+
 router.delete("/:id", async (req, res) => {
   try {
     await Service.findByIdAndDelete(req.params.id);

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Header = require('../models/Header');
 
-// Get the current header configuration
+
 router.get('/', async (req, res) => {
   try {
     const header = await Header.findOne();
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Add a new header configuration
+
 router.post('/add', async (req, res) => {
   try {
     const newHeader = new Header(req.body);
@@ -25,7 +25,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Update header by ID
+
 router.put('/:id', async (req, res) => {
   try {
     const updatedHeader = await Header.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -36,7 +36,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete header by ID
 router.delete('/:id', async (req, res) => {
   try {
     await Header.findByIdAndDelete(req.params.id);
